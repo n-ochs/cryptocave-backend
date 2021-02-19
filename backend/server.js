@@ -32,6 +32,7 @@ app.get('/ping', (req, res) => {
 app.use('/', authRoutes);
 
 app.listen(PORT, () => {
+    db.initDb();
     console.log(`Server started on localhost:${PORT} at: ` +Date())
 });
 
