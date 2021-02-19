@@ -31,11 +31,15 @@ app.get('/ping', (req, res) => {
 });
 app.use('/', authRoutes);
 
-db.initDb((err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('DB connected!');
-        app.listen(PORT);
-    };
+app.listen(PORT, () => {
+    console.log(`Server started on localhost:${PORT} at: ` +Date())
 });
+
+// db.initDb((err) => {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log('DB connected!');
+//         app.listen(PORT);
+//     };
+// });
