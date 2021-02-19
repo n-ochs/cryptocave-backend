@@ -23,6 +23,11 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.get('/ping', (req, res) => {
+    res.send({
+        message: "pong"
+    });
+});
 app.use('/', authRoutes);
 
 db.initDb((err) => {
@@ -30,6 +35,6 @@ db.initDb((err) => {
         console.log(err);
     } else {
         console.log('DB connected!');
-        app.listen(3100);
+        app.listen(process.env.PORT || 3100);
     };
 });
