@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const PORT = process.env.PORT || 3100
 
 //Routes
 const authRoutes = require('./routes/auth');
@@ -35,6 +36,6 @@ db.initDb((err) => {
         console.log(err);
     } else {
         console.log('DB connected!');
-        app.listen(process.env.PORT || 3100);
+        app.listen(PORT);
     };
 });
