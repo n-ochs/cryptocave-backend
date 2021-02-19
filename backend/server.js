@@ -24,23 +24,15 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.get('/ping', (req, res) => {
+app.get('/', (req, res) => {
     res.send({
-        message: "pong"
+        message: "Dev use only."
     });
 });
+
 app.use('/', authRoutes);
 
 app.listen(PORT, () => {
     db.initDb();
-    console.log(`Server started on localhost:${PORT} at: ` +Date())
+    console.log(`Server started on localhost:${PORT} at: ` +Date());
 });
-
-// db.initDb((err) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log('DB connected!');
-//         app.listen(PORT);
-//     };
-// });
