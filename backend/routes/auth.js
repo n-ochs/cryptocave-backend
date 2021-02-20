@@ -59,7 +59,7 @@ router.post('/signup', (req, res, next) => {
             })
             .catch(err => {
                 console.log(err);
-                res.status(500).json({ message: 'Creating the user failed.' });
+                res.status(400).json({ message: 'Creating the user failed. Email may already be in use.' });
             });
         })
         .catch(err => {
