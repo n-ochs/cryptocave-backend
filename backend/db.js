@@ -6,12 +6,16 @@ const mongoDbUrl = process.env.MONGO_CONNECTION;
 
 let _db;
 
-const initDb = callback => {
+const initDb = () => {
+    const callback = (param1, param2) => {
+        return (param1, param2);
+    };
+    
     if (_db) {
         console.log('Database is already initialized');
         return callback(null, _db);
     };
-    MongoClient.connect(mongoDbUrl)
+    MongoClient.connect(mongoDbUrl, { useUnifiedTopology: true })
         .then(client => {
             _db = client;
             callback(null, _db);

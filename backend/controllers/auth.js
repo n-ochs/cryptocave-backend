@@ -1,10 +1,6 @@
 const db = require('../db');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
-const createToken = () => {
-    return jwt.sign({}, process.env.JWT_SECRET, { expiresIn: '1h' });
-};
+const { createToken } = require('../middleware/jwt');
 
 exports.signup = (req, res, next) => {
     const email = req.body.email;
@@ -23,7 +19,7 @@ exports.signup = (req, res, next) => {
             })
             .then(result => {
                 console.log(result);
-                const token = createToken();
+                const token = createToken(email);
                 res
                     .status(201)
                     .json({ token: token, user: { email: email } });
@@ -50,7 +46,7 @@ exports.login = (req, res, next) => {
             if (!result) {
                 throw Error();
             };
-            const token = createToken();
+            const token = createToken(email);
             res
                 .status(200)
                 .json({
