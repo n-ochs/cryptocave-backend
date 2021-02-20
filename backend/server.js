@@ -2,10 +2,11 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const PORT = process.env.PORT || 3100
+const PORT = process.env.PORT || 3100;
 
 //Routes
 const authRoutes = require('./routes/auth');
+const verifyRoutes = require('./routes/verifyToken');
 
 //MongoDB Setup
 const db = require('./db');
@@ -21,9 +22,6 @@ app.use((req, res, next) => {
     next();
 });
 
-//Middleware
-const { verifyToken } = require('./middleware/jwt');
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -33,9 +31,7 @@ app.get('/', (req, res) => {
     });
 });
 
-app.post('/verifyToken', (req, res) => {
-    console.log(verifyToken(req.body.token));
-});
+app.use('/', verifyRoutes);
 
 app.use('/', authRoutes);
 

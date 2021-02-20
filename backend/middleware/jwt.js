@@ -5,7 +5,6 @@ exports.createToken = (email) => {
 };
 
 exports.verifyToken = (token) => {
-    console.log(token)
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     return decoded;
 };
