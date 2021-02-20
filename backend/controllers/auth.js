@@ -1,10 +1,6 @@
 const db = require('../db');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
-const createToken = (email) => {
-    return jwt.sign({email}, process.env.JWT_SECRET, { expiresIn: '1h' });
-};
+const { createToken } = require('../middleware/jwt');
 
 exports.signup = (req, res, next) => {
     const email = req.body.email;

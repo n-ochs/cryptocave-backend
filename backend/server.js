@@ -21,6 +21,9 @@ app.use((req, res, next) => {
     next();
 });
 
+//Middleware
+const { verifyToken } = require('./middleware/jwt');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -28,6 +31,10 @@ app.get('/', (req, res) => {
     res.send({
         message: "Dev use only."
     });
+});
+
+app.post('/verifyToken', (req, res) => {
+    console.log(verifyToken(req.body.token));
 });
 
 app.use('/', authRoutes);
