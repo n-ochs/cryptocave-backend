@@ -80,3 +80,28 @@ exports.login = (req, res, next) => {
                 .json({ message: 'Authentication failed, invalid username or password.' });
         });
 };
+
+exports.verifyUser = (req, res, next) => {
+    const email = req.body.email;
+    const verificationcode = req.body.verificationCode;
+
+    db.getDb().db().collection('users').findOne({email: email})
+        .then(userDoc => {
+            if (userDoc.verification == verificationcode) {
+                return true
+            } else false;
+        })
+        .then(result => {
+            if (!result) {
+                throw Error();
+            };
+            res
+                .status(200)
+                .json({ message: 'Verification successful.' });
+        })
+        .catch(err => {
+            res
+                .status(401)
+                .json({ message: 'Verification unsuccessful.' })
+        });
+};
