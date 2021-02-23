@@ -7,6 +7,7 @@ const DOMAIN = 'sandboxea0b065607344c90a4a281d94924e9a7.mailgun.org';
 const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN});
 
 exports.signup = (req, res, next) => {
+    const username = req.body.username;
     const email = req.body.email;
     const pw = req.body.password;
 
@@ -21,6 +22,7 @@ exports.signup = (req, res, next) => {
             .db()
             .collection('users')
             .insertOne({
+                username: username,
                 email: email,
                 password: hashedPW,
                 verification: randomNumber
