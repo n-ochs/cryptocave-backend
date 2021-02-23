@@ -1,10 +1,17 @@
 const db = require('../db');
 const bcrypt = require('bcryptjs');
+const mailgun = require("mailgun-js");
 const { createToken } = require('../middleware/jwt');
+
+const DOMAIN = 'sandboxea0b065607344c90a4a281d94924e9a7.mailgun.org';
+const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN});
 
 exports.signup = (req, res, next) => {
     const email = req.body.email;
     const pw = req.body.password;
+
+    //Assigns a random number to the user for email verification
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
 
     //Hashing password before storing it in database
     bcrypt
@@ -15,11 +22,24 @@ exports.signup = (req, res, next) => {
             .collection('users')
             .insertOne({
                 email: email,
-                password: hashedPW
+                password: hashedPW,
+                verification: randomNumber
             })
             .then(result => {
                 console.log(result);
                 const token = createToken(email);
+
+                const data = {
+                    from: 'Crypto Cave <noreply@cryptocave.com>',
+                    to: email,
+                    subject: 'Please activate your account',
+                    text: `Thank you for signing up for Crypto Cave. Please activate your account by entering ${randomNumber} on our activation page.`
+                };
+                mg.messages().send(data, (error, body) => {
+                    if (error) console.log(error);
+                    else console.log(body);
+                });
+
                 res
                     .status(201)
                     .json({ token: token, user: { email: email } });
