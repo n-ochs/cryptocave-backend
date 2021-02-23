@@ -33,7 +33,10 @@ exports.signup = (req, res, next) => {
                     from: 'Crypto Cave <noreply@cryptocave.com>',
                     to: email,
                     subject: 'Please activate your account',
-                    text: `Thank you for signing up for Crypto Cave. Please activate your account by entering ${randomNumber} on our activation page.`
+                    html: `
+                    <h1>Thank you for signing up for Crypto Cave!</h1>
+                    <p>Please activate your account by entering ${randomNumber} on our <a href="https://cryptocave.netlify.app/activation">activation page</a>.</p>
+                    `
                 };
                 mg.messages().send(data, (error, body) => {
                     if (error) console.log(error);
