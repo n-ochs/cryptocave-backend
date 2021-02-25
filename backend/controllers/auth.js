@@ -1,6 +1,6 @@
 const db = require('../db');
 const bcrypt = require('bcryptjs');
-const mailgun = require("mailgun-js");
+const mailgun = require('mailgun-js');
 const { createToken } = require('../middleware/jwt');
 
 const DOMAIN = 'sandboxea0b065607344c90a4a281d94924e9a7.mailgun.org';
