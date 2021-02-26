@@ -5,6 +5,8 @@ const router = Router();
 
 router.post('/create', controller.createWatchlist);
 
+router.get('/watchlist', controller.watchlist);
+
 router.post('/add', controller.add);
 
 router.post('/delete', controller.remove);

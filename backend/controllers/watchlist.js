@@ -75,6 +75,25 @@ exports.remove = (req, res, next) => {
         });
 };
 
-exports.watchlist = {
-//get watchlist
+exports.watchlist = (req, res, next) => {
+    const token = req.headers.authorization;
+    const payload = verifyToken(token);
+    const { email } = payload;
+
+    db.getDb()
+        .db()
+        .collection('watchlist')
+        .findOne(
+            {email: email}
+        )
+        .then((userWatchlist) => {
+            res
+                .status(200)
+                .json(userWatchlist.coins);
+        })
+        .catch(() => {
+            res
+                .status(401)
+                .json({ message: "Error finding user's watchlist." });
+        });
 };
