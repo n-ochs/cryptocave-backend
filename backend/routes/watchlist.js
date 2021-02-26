@@ -7,4 +7,6 @@ router.post('/create', controller.createWatchlist);
 
 router.post('/add', controller.add);
 
+router.post('/delete', controller.remove);
+
 module.exports = router;
