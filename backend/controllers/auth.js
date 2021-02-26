@@ -1,6 +1,6 @@
 const db = require('../db');
 const bcrypt = require('bcryptjs');
-const mailgun = require("mailgun-js");
+const mailgun = require('mailgun-js');
 const { createToken } = require('../middleware/jwt');
 
 const DOMAIN = 'sandboxea0b065607344c90a4a281d94924e9a7.mailgun.org';
@@ -51,12 +51,16 @@ exports.signup = (req, res, next) => {
             })
             .catch(err => {
                 console.log(err);
-                res.status(400).json({ message: 'Creating the user failed. Email may already be in use.' });
+                res
+                    .status(400)
+                    .json({ message: 'Creating the user failed. Email may already be in use.' });
             });
         })
         .catch(err => {
             console.log(err);
-            res.status(500).json({ message: 'Creating the user failed.' });
+            res
+                .status(500)
+                .json({ message: 'Creating the user failed.' });
         });
 };
 

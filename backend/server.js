@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3100;
 //Routes
 const authRoutes = require('./routes/auth');
 const verifyRoutes = require('./routes/verifyToken');
+const watchlistRoutes = require('./routes/watchlist');
 
 //MongoDB Setup
 const db = require('./db');
@@ -34,6 +35,8 @@ app.get('/', (req, res) => {
 app.use('/', verifyRoutes);
 
 app.use('/', authRoutes);
+
+app.use('/', watchlistRoutes);
 
 app.listen(PORT, () => {
     db.initDb();
