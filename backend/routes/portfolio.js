@@ -1,13 +1,13 @@
 const Router = require('express').Router;
-const controller = require('../controllers/watchlist');
+const controller = require('../controllers/portfolio');
 
 const router = Router();
 
 //Create
-router.post('/create', controller.createWatchlist);
+router.post('/create', controller.createPortfolio);
 
 //Read
-router.get('/watchlist', controller.watchlist);
+router.get('/portfolio', controller.portfolio);
 
 //Update
 router.post('/add', controller.add);

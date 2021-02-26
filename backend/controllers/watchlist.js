@@ -1,6 +1,7 @@
 const db = require('../db');
 const { verifyToken } = require('../middleware/jwt');
 
+//Create
 exports.createWatchlist = (req, res, next) => {
     const token = req.headers.authorization;
     const payload = verifyToken(token);
@@ -25,6 +26,31 @@ exports.createWatchlist = (req, res, next) => {
             });
 };
 
+//Read
+exports.watchlist = (req, res, next) => {
+    const token = req.headers.authorization;
+    const payload = verifyToken(token);
+    const { email } = payload;
+
+    db.getDb()
+        .db()
+        .collection('watchlist')
+        .findOne(
+            {email: email}
+        )
+        .then((userWatchlist) => {
+            res
+                .status(200)
+                .json(userWatchlist.coins);
+        })
+        .catch(() => {
+            res
+                .status(401)
+                .json({ message: "Error finding user's watchlist." });
+        });
+};
+
+//Update
 exports.add = (req, res, next) => {
     const newCoin = req.body.newCoin;
     const token = req.headers.authorization;
@@ -50,6 +76,7 @@ exports.add = (req, res, next) => {
         });
 };
 
+//Delete
 exports.remove = (req, res, next) => {
     const deletedCoin = req.body.deletedCoin;
     const token = req.headers.authorization;
@@ -72,28 +99,5 @@ exports.remove = (req, res, next) => {
             res
                 .status(401)
                 .json({ message: `Error deleting ${deletedCoin} from watchlist.` });
-        });
-};
-
-exports.watchlist = (req, res, next) => {
-    const token = req.headers.authorization;
-    const payload = verifyToken(token);
-    const { email } = payload;
-
-    db.getDb()
-        .db()
-        .collection('watchlist')
-        .findOne(
-            {email: email}
-        )
-        .then((userWatchlist) => {
-            res
-                .status(200)
-                .json(userWatchlist.coins);
-        })
-        .catch(() => {
-            res
-                .status(401)
-                .json({ message: "Error finding user's watchlist." });
         });
 };

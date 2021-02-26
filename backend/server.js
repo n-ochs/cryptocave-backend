@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3100;
 const authRoutes = require('./routes/auth');
 const verifyRoutes = require('./routes/verifyToken');
 const watchlistRoutes = require('./routes/watchlist');
+// const portfolioRoutes = require('./routes/portfolio');
 
 //MongoDB Setup
 const db = require('./db');
@@ -23,9 +24,11 @@ app.use((req, res, next) => {
     next();
 });
 
+//Extra Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+//App
 app.get('/', (req, res) => {
     res.send({
         message: "Dev use only."
@@ -36,7 +39,9 @@ app.use('/', verifyRoutes);
 
 app.use('/', authRoutes);
 
-app.use('/', watchlistRoutes);
+app.use('/wl', watchlistRoutes);
+
+// app.use('/p', portfolioRoutes);
 
 app.listen(PORT, () => {
     db.initDb();
