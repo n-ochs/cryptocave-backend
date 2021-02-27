@@ -10,7 +10,7 @@ router.post('/create', controller.createPortfolio);
 router.get('/portfolio', controller.portfolio);
 
 // //Update
-// router.post('/add', controller.add);
+router.post('/add', controller.add);
 
 // //Delete
 // router.post('/delete', controller.remove);
