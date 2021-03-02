@@ -52,7 +52,7 @@ exports.portfolio = (req, res, next) => {
 
 //Update - check if coin already exists. if not, create new. if it does, only update the value.
 exports.add = (req, res, next) => {
-    const newCoin = req.body.newCoin;
+    const newCoin = req.body.newCoin.toUpperCase();
     const quantity = req.body.quantity;
     const token = req.headers.authorization;
     const payload = verifyToken(token);
